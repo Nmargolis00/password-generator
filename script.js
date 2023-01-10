@@ -41,7 +41,7 @@ const specCaseConfirm = confirm("Would you like to include special characters?")
 
 //This confirms that there is at least one selection
 
-if(numbersConfirm === false && lowerCaseConfirm === false && upperCaseConfirm === false && specCaseConfirm === false){
+if(!numbersConfirm && !lowerCaseConfirm && !upperCaseConfirm && !specCaseConfirm){
   alert("ERROR: Please select at least one criteria to create a password");
   return;
 }
