@@ -9,7 +9,7 @@ const upperCase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "
 const specChar = ["!", "@", "#", "$", "%","^", "&", "*", "(", ")"];
 let myPassword = ""
 
-const passwordGenerated = []
+var passwordArray;
 
 // const password = {
 //  numbers: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -21,7 +21,7 @@ const passwordGenerated = []
 // }
 // Make charset into separate arrays for numbers, spec. character, lower, upper case. DEPENDING ON WHAT THEY CHOOSE YOU WILL COMBINE THE ARRAYS INTO ONE TO THEN RANDOMIZE THE ARRAY UP TO THE PASSWORD LENGTH
 
-//You'll need concat to combine arrays
+//Function to determine password criteria
 
 function newPassword() {
 
@@ -33,7 +33,7 @@ if(passwordLength < 8 || passwordLength > 128){
   
 }
 
-
+// Other Criteria Selections
 const numbersConfirm = confirm("Would you like to include numbers?");
 const lowerCaseConfirm = confirm("Would you like to include lowercase letters?");
 const upperCaseConfirm = confirm("Would you like to include uppercase letters?");
@@ -47,7 +47,7 @@ if(numbersConfirm === false && lowerCaseConfirm === false && upperCaseConfirm ==
 }
 
  // Console Logs
-// console.log(passwordLength);
+//console.log(passwordLength);
 // console.log(lowerCaseConfirm);
 // console.log(numbersConfirm);
 // console.log(upperCaseConfirm);
@@ -56,37 +56,72 @@ if(numbersConfirm === false && lowerCaseConfirm === false && upperCaseConfirm ==
 
 //If you choose yes, than use it in a password in a random setting
 
- if(numbersConfirm === true && lowerCaseConfirm === false && upperCaseConfirm === false && specCaseConfirm === false) {
+// if statements if only one criteria is true
 
- for (let index = 0; index < passwordLength; index++) {
-   const password = numbers[Math.floor(Math.random() * numbers.length)];
-  myPassword = numbers + password;
-
-  document.getElementById("password").value = myPassword;
-  return;
+ if(numbersConfirm && !specCaseConfirm && !upperCaseConfirm && !lowerCaseConfirm){
+   passwordArray = numbers.slice(0);
  }
- }
-//It's a little closer, it shows numbers that are separated by a comma and do not match passwordLength
+ if(!numbersConfirm && specCaseConfirm && !upperCaseConfirm && !lowerCaseConfirm){
+  passwordArray = specChar.slice(0);
+}
+if(!numbersConfirm && !specCaseConfirm && upperCaseConfirm && !lowerCaseConfirm){
+  passwordArray = upperCase.slice(0);
+}
+if(!numbersConfirm && !specCaseConfirm && !upperCaseConfirm && lowerCaseConfirm){
+  passwordArray = lowerCase.slice(0);
+}
 
 
+// if statements if 2 of the 4 are true
+if (numbersConfirm && specCaseConfirm && !upperCaseConfirm && !lowerCaseConfirm){
+  passwordArray = numbers.concat(specChar);
+}
+if (numbersConfirm && !specCaseConfirm && upperCaseConfirm && !lowerCaseConfirm){
+  passwordArray = numbers.concat(upperCase);
+}
+if (numbersConfirm && !specCaseConfirm && !upperCaseConfirm && lowerCaseConfirm){
+  passwordArray = numbers.concat(lowerCase);
+}
+if (!numbersConfirm && specCaseConfirm && upperCaseConfirm && !lowerCaseConfirm){
+  passwordArray = specChar.concat(upperCase);
+}
+if (!numbersConfirm && specCaseConfirm && !upperCaseConfirm && lowerCaseConfirm){
+  passwordArray = specChar.concat(lowerCase);
+}
+if (!numbersConfirm && !specCaseConfirm && upperCaseConfirm && lowerCaseConfirm){
+  passwordArray = upperCase.concat(lowerCase);
+}
+// if statements if 3 of the 4 are true
 
-//  for (let index = 0; index < passwordLength; index++) {
-//   const lowerCaseGen = lowerCase[Math.floor(Math.random() * lowerCase[index] )];
-//   console.log(lowerCaseGen);
-//    passwordGenerated = passwordGenerated.concat.lowerCaseGen
-//    console.log(passwordGenerated);
+if (numbersConfirm && specCaseConfirm && upperCaseConfirm && !lowerCaseConfirm){
+  passwordArray = numbers.concat(specChar, upperCase);
+}
+if (numbersConfirm && specCaseConfirm && !upperCaseConfirm && lowerCaseConfirm){
+  passwordArray = numbers.concat(specChar, lowerCase);
+}
+if (numbersConfirm && !specCaseConfirm && upperCaseConfirm && lowerCaseConfirm){
+  passwordArray = numbers.concat(lowerCase, upperCase);
+}
+if (!numbersConfirm && specCaseConfirm && upperCaseConfirm && lowerCaseConfirm){
+  passwordArray = lowerCase.concat(specChar, upperCase);
+}
+//if statements if all 4 are true
+
+if (numbersConfirm && specCaseConfirm && upperCaseConfirm && lowerCaseConfirm){
+  passwordArray = numbers.concat(specChar, upperCase, lowerCase);
+}
+
+let password = ""
+for (let index = 0; index < passwordLength; index++) {
+  let randomChar = Math.floor(Math.random() * passwordArray.length);
+  password += passwordArray[randomChar];
   
+  document.getElementById("password").value = password;
 }
 
 
 
-
-
-
-
-
-
-
+}
 
 
 // Then use confirms to define yes or no questions
