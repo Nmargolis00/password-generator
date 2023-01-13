@@ -26,7 +26,13 @@ var passwordArray;
 function newPassword() {
 
   //Determine Password Length
-const passwordLength = prompt("Please enter a length of your desired password between 8 and 128 characters");
+const passwordLength = parseInt(prompt("Please enter a length of your desired password between 8 and 128 characters"));
+
+if (Number.isNaN(passwordLength)) {
+  alert('Password length should be a number');
+  return;
+}
+
 if(passwordLength < 8 || passwordLength > 128){
   alert("ERROR: Please enter a value greater than 8 and less than 128");
   return;
